@@ -1,0 +1,61 @@
+{
+  "info": {
+    "name": "Job Stories Tracker API",
+    "_postman_id": "job-stories-api-collection",
+    "description": "Basic Postman collection for create/list/get story endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create story",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Ship metrics pipeline\",\n  \"situation\": \"Reporting was slow\",\n  \"task\": \"Build automated pipeline\",\n  \"action\": \"Implemented ETL and monitoring\",\n  \"result\": \"Reduced reporting time from 6h to 10m\",\n  \"tags\": \"java,spring\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/stories",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api","stories"]
+        }
+      }
+    },
+    {
+      "name": "List stories",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/stories",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api","stories"]
+        }
+      }
+    },
+    {
+      "name": "Get story by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/stories/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api","stories", ":id"]
+        }
+      }
+    }
+  ]
+}

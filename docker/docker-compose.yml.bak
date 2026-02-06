@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: jobstories-postgres
+    environment:
+      POSTGRES_DB: jobstories
+      POSTGRES_USER: jobstories
+      POSTGRES_PASSWORD: jobstories
+    ports:
+      - "5432:5432"
+    volumes:
+      - jobstories_pg:/var/lib/postgresql/data
+
+volumes:
+  jobstories_pg:
