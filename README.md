@@ -1,35 +1,14 @@
 # Job Stories Tracker - Backend
 
-This is the backend for the Job Stories Tracker project (Spring Boot + Postgres).
+**Problem Statement**
+This service manages career accomplishment stories and emits domain events when stories transition through their lifecycle. It is intentionally designed to demonstrate service ownership, event-driven architecture, and cloud portability rather than UI complexity.
 
-Quick start
+**Why I built this**
+I wanted a lightweight, production-minded backend service that helps me capture senior-level accomplishment stories while I’m actively interviewing. The goal is not a feature-heavy product—it’s a small system that demonstrates service ownership, event-driven design, and cloud portability.
 
-1) Start Postgres (Docker):
 
-```bash
-cd docker
-docker compose up -d
-```
+**Tradeoffs / Decisions**
 
-This will start a Postgres container named `jobstories-postgres` with DB `jobstories` and user `jobstories` (password `jobstories`). If you changed the host port to `5433`, connect to that port instead of `5432`.
-
-2) Run the backend:
-
-```bash
-cd backend
-./mvnw spring-boot:run
-```
-
-The API will be available at `http://localhost:8080` and Swagger UI at `http://localhost:8080/swagger-ui/index.html`.
-
-3) Run tests:
-
-```bash
-cd backend
-./mvnw test
-```
-
-Notes
-
-- For local development we use `spring.jpa.hibernate.ddl-auto=update` so Hibernate will create tables automatically.
-- If you prefer to run Postgres locally (Homebrew) instead of Docker, update `backend/src/main/resources/application.properties` with the correct JDBC URL and credentials.
+* **Kafka for domain events:** Chosen to model decoupled workflows and demonstrate event-driven design; using a simple producer first to avoid overbuilding consumers.
+* **Status-based lifecycle:**`DRAFT → READY` is explicit to avoid boolean flags and allow future states (e.g., `ARCHIVED`).
+* **Auth deferred:** Authentication is intentionally postponed to keep the core domain and event flow clear; will be added once the service boundaries are solid.
