@@ -3,6 +3,7 @@ package com.ericross.backend.dto;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.ericross.backend.model.StoryStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record StoryResponse(
@@ -14,5 +15,6 @@ public record StoryResponse(
     @Schema(description = "Result / impact", example = "Reduced reporting time from 6h to 10m") String result,
     @Schema(description = "Comma-separated tags", example = "java,spring,postgres") String tags,
     @Schema(description = "Creation timestamp") Instant createdAt,
-    @Schema(description = "Last update timestamp") Instant updatedAt
+    @Schema(description = "Last update timestamp") Instant updatedAt,
+    @Schema(description = "Story's status") StoryStatus status
 ) {}

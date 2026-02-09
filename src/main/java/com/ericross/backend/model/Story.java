@@ -3,6 +3,8 @@ package com.ericross.backend.model;
 import java.time.Instant;
 import java.util.UUID;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -54,10 +56,19 @@ public class Story {
     @Column(name = "updated_at", nullable = false, columnDefinition = "timestamp with time zone")
     private Instant updatedAt;
 
+    @Enumerated(EnumType.STRING)
+    // Make column nullable at the DB level so Hibernate can add it without failing if existing rows are present.
+    @Column(nullable = true)
+    private StoryStatus status;
+
+
     @PrePersist
     public void ensureId() {
         if (this.id == null) {
             this.id = UUID.randomUUID();
+        }
+        if (this.status == null) {
+            this.status = StoryStatus.DRAFT;
         }
     }
 }

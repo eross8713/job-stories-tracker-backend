@@ -22,8 +22,13 @@ public class JacksonConfig {
     @Autowired
     private ApplicationContext applicationContext;
 
+    // The Spring-provided Jackson2ObjectMapperBuilder type is currently deprecated in this
+    // Spring Boot version but still required in some auto-configuration paths. Rather than
+    // refactor the entire bootstrap logic now, suppress the deprecation warning for the
+    // fallback bean so the compiler/IDE does not spam warnings while we keep compatibility.
     @Bean
     @ConditionalOnMissingBean
+    @SuppressWarnings("deprecation")
     public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
         log.info("Registering fallback Jackson2ObjectMapperBuilder bean");
         return new Jackson2ObjectMapperBuilder();

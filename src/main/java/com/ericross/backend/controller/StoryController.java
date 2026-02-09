@@ -68,4 +68,10 @@ public class StoryController {
     public StoryResponse get(@PathVariable UUID id) {
         return svc.get(id);
     }
+
+    @PostMapping("/{id}/ready")
+    public StoryResponse markReady(@PathVariable UUID id) {
+        return svc.markReady(id);
+    }
+
 }
