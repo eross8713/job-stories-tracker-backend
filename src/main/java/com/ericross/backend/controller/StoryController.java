@@ -38,11 +38,13 @@ public class StoryController {
     @Operation(summary = "Create a story")
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Story created"),
-        @ApiResponse(responseCode = "500", description = "Invalid request")
+        @ApiResponse(responseCode = "422", description = "Invalid request")
     })
     @PostMapping
     public ResponseEntity<StoryResponse> create(@Valid @RequestBody StoryRequest req) {
+        // create the story and return status with Location header pointing to the new resource
         StoryResponse created = svc.create(req);
+        // location header should be the URL to get the created story, e.g. /api/stories/{id}
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
             .buildAndExpand(created.id())
@@ -70,8 +72,9 @@ public class StoryController {
     }
 
     @PostMapping("/{id}/ready")
-    public StoryResponse markReady(@PathVariable UUID id) {
-        return svc.markReady(id);
+    public StoryResponse markReady(@PathVariable UUID id,
+                                   @org.springframework.web.bind.annotation.RequestHeader("Idempotency-Key") String idempotencyKey) {
+        return svc.markReady(id, idempotencyKey);
     }
 
 }
